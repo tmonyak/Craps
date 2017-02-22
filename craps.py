@@ -421,5 +421,6 @@ for desiredReturn in returns:
 		highFile.write("\n")
 
 
-
 resultFile.close()
+lowFile.close()
+highFile.close()
