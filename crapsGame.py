@@ -272,11 +272,7 @@ class CrapsGame:
 					if (self.debug == True):
 						print("Won ${} on come".format(self.comeBet))
 					self.money = self.money + self.comeBet
-					if(self.debug == True):
-						print("Available money: ${}".format(self.availableMoney))
 					self.availableMoney = self.availableMoney + self.comeBet * 2
-					if(self.debug == True):
-						print("Available money: ${}".format(self.availableMoney))
 					self.comeBet = 0
 
 			elif (rollValue == 2 or rollValue == 3 or rollValue == 12):
