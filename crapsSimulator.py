@@ -47,19 +47,19 @@ for desiredReturn in returns:
 		winLows = []
 		allHighs = []
 		loseHighs = []
-		for x in range(0, iterations):
+		for iteration in range(0, iterations):
 			game = CrapsGame(int(sys.argv[1]), minBet, False, False, debug)
 
-			while (game.getAvailableMoney() >= minBet and game.getAvailableMoney() < desiredReturn):
+			#don't terminate until all money off table
+			while (game.getMoney() >= minBet and game.getAvailableMoney() < desiredReturn):
 
 				game.startRound()
 
 				#bet
 				if (game.isOn() == False):
-					if (minBet <= game.getAvailableMoney()):
-						game.betPass(1)
+					game.betPass(1)
 
-					if(game.getCameLastRoll() == True):
+					if(game.getCameLastRoll() == True and game.getNumBetsOnTable() < 3 and game.getMoney() < desiredReturn):
 						if (game.getLastCome() == 6 or game.getLastCome() == 8):
 							multiple = 3
 						elif (game.getLastCome() == 5 or game.getLastCome() == 9):
@@ -89,10 +89,11 @@ for desiredReturn in returns:
 							multiple = 1
 						game.betPassOdds(multiple)
 
-						game.betCome(1)
+						if (game.getNumBetsOnTable() < 3 and game.getMoney() < desiredReturn):
+							game.betCome(1)
 						
 
-					elif (game.getNumBetsOnTable() < 3):
+					elif (game.getNumBetsOnTable() < 3 and game.getMoney() < desiredReturn):
 						if (game.getNumBetsOnTable() == 1):
 							game.betCome(1)
 							
@@ -115,9 +116,9 @@ for desiredReturn in returns:
 				winLows.insert(success, game.getLow())
 				success = success + 1
 			else:
-				loseHighs.insert(x-success, game.getHigh())
-			allHighs.insert(x, game.getHigh())
-			allLows.insert(x, game.getLow())
+				loseHighs.insert(iteration-success, game.getHigh())
+			allHighs.insert(iteration, game.getHigh())
+			allLows.insert(iteration, game.getLow())
 		successRate = int(success/iterations * 100)
 		meanRolls = 0#int(totalRolls/iterations)
 		meanPoints = 0#int(totalPoints/iterations)

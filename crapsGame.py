@@ -42,6 +42,9 @@ class CrapsGame:
 		self.high = availableMoney
 
 
+	def getMoney(self):
+		return self.money
+
 	def getAvailableMoney(self):
 		return self.availableMoney
 
@@ -131,7 +134,7 @@ class CrapsGame:
 		if (self.passBet > 0):
 			self.availableMoney = self.availableMoney - self.passBet
 			if (self.debug == True):
-				print("Betting ${} on pass".format(self.passBet))
+				print("Bet ${} on pass".format(self.passBet))
 
 	def betPassOdds(self, multiple):
 		self.passOdds = self.minBet * multiple
@@ -147,7 +150,7 @@ class CrapsGame:
 		self.comeBet = self.minBet * multiple
 		while (self.comeBet > self.availableMoney and self.comeBet > 0):
 			self.comeBet = self.comeBet - self.minBet
-		if (self.comeBet > self.availableMoney):
+		if (self.comeBet > 0):
 			self.availableMoney = self.availableMoney - self.comeBet
 			if (self.debug == True):
 				print("Bet ${} on come".format(self.comeBet))
@@ -231,7 +234,7 @@ class CrapsGame:
 
 				for num in self.betsArray:
 					self.money = self.money - self.bets[num].passBet
-					if(debug == True):
+					if(self.debug == True):
 						if (self.bets[num].passBet != 0):
 							print("Lost ${} on pass bet".format(self.bets[num].passBet))
 					self.money = self.money - self.bets[num].passOdds
@@ -245,7 +248,7 @@ class CrapsGame:
 					self.money = self.money - self.bets[num].comeOdds
 					if(self.debug == True):
 						if (self.bets[num].comeOdds != 0):
-							print("Lost ${} on comeOdds".format(self.bets[num].comeOdds))
+							print("Lost ${} on come odds".format(self.bets[num].comeOdds))
 					self.money = self.money - self.bets[num].placeBet
 					if(self.debug == True):
 						if (self.bets[num].placeBet != 0):
@@ -287,11 +290,11 @@ class CrapsGame:
 				if (self.debug == True):
 					if (self.bets[rollValue].passBet != 0):
 						print("Won ${} on pass bet".format(self.bets[rollValue].passBet))
-				self.money = self.money + self.bets[rollValue].passOdds * self.bets[rollValue].payoff
-				self.availableMoney = self.availableMoney + self.bets[rollValue].passOdds * self.bets[rollValue].payoff
+				self.money = self.money + int(self.bets[rollValue].passOdds * self.bets[rollValue].payoff)
+				self.availableMoney = self.availableMoney + int(self.bets[rollValue].passOdds * self.bets[rollValue].payoff)
 				if (self.debug == True):
 					if (self.bets[rollValue].passOdds != 0):
-						print("Won ${} on pass odds".format(self.bets[rollValue].passOdds * self.bets[rollValue].payoff))
+						print("Won ${} on pass odds".format(int(self.bets[rollValue].passOdds * self.bets[rollValue].payoff)))
 				if (self.bets[rollValue].comeBet != 0):
 					self.money = self.money + self.bets[rollValue].comeBet
 					self.availableMoney = self.availableMoney + self.bets[rollValue].comeBet*2
@@ -300,19 +303,19 @@ class CrapsGame:
 						print("Won ${} on come bet".format(self.bets[rollValue].comeBet))
 					self.bets[rollValue].comeBet = 0
 				if (self.bets[rollValue].comeOdds != 0):
-					self.money = self.money + self.bets[rollValue].comeOdds * self.bets[rollValue].payoff
-					self.availableMoney = self.availableMoney + self.bets[rollValue].comeOdds + self.bets[rollValue].comeOdds * self.bets[rollValue].payoff
+					self.money = self.money + int(self.bets[rollValue].comeOdds * self.bets[rollValue].payoff)
+					self.availableMoney = self.availableMoney + self.bets[rollValue].comeOdds + int(self.bets[rollValue].comeOdds * self.bets[rollValue].payoff)
 					if (self.debug == True):
-						print("Won ${} on come odds".format(self.bets[rollValue].comeOdds * self.bets[rollValue].payoff))
+						print("Won ${} on come odds".format(int(self.bets[rollValue].comeOdds * self.bets[rollValue].payoff)))
 					self.bets[rollValue].comeOdds = 0
-				self.money = self.money + self.bets[rollValue].placeBet * self.bets[rollValue].placePayoff
-				self.availableMoney = self.availableMoney + self.bets[rollValue].placeBet * self.bets[rollValue].placePayoff
+				self.money = self.money + int(self.bets[rollValue].placeBet * self.bets[rollValue].placePayoff)
+				self.availableMoney = self.availableMoney + int(self.bets[rollValue].placeBet * self.bets[rollValue].placePayoff)
 				if (self.debug == True):
 					if (self.bets[rollValue].placeBet != 0):
-						print("Won ${} on place bet".format(self.bets[rollValue].placeBet * self.bets[rollValue].placePayoff))
+						print("Won ${} on place bet".format(int(self.bets[rollValue].placeBet * self.bets[rollValue].placePayoff)))
 				if (self.comeBet != 0):
 					if(self.debug == True):
-						print("Come point set")
+						print("Come point set at {}".format(rollValue))
 					self.numBetsOnTable = self.numBetsOnTable + 1
 					self.cameLastRoll = True
 					self.lastCome = rollValue
