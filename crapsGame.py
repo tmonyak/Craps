@@ -100,10 +100,11 @@ class CrapsGame:
 				if (self.bets[num].placeBet != 0):
 					print("${} on place ({})".format(self.bets[num].placeBet, num))
 
-		if(self.on == True):
-			print("Point is: {}".format(self.point))
-		else:
-			print("Come out roll")
+		if (self.debug == True):
+			if(self.on == True):
+				print("Point is: {}".format(self.point))
+			else:
+				print("Come out roll")
 
 
 	def roll(self):
