@@ -40,6 +40,7 @@ class CrapsGame:
 		self.numBetsOnTable = 0
 		self.low = availableMoney
 		self.high = availableMoney
+		self.snakeEyes = 0
 
 
 	def getMoney(self):
@@ -77,6 +78,9 @@ class CrapsGame:
 
 	def getHigh(self):
 		return self.high
+
+	def getSnakeEyes(self):
+		return self.snakeEyes
 
 	def startRound(self):
 		if (self.availableMoney < self.low):
@@ -181,7 +185,19 @@ class CrapsGame:
 			if (self.debug == True):
 				print("Place ${} on {}".format(self.placeBet, number))
 
+	def betSnakeEyes(self, multiple):
+		self.snakeEyes = self.minBet * multiple
+		self.availableMoney = self.availableMoney - self.snakeEyes
+		self.numBetsOnTable = self.numBetsOnTable + 1
+
 	def updateEarnings(self, rollValue):
+		if (self.snakeEyes > 0):
+			if (rollValue == 2):
+				self.money = self.money + self.snakeEyes * 30
+				self.availableMoney = self.availableMoney + self.snakeEyes * 31
+			self.numBetsOnTable = self.numBetsOnTable - 1
+			self.snakeEyes = 0
+
 		if (self.on == False):
 			if (rollValue == 7 or rollValue == 11):
 				if (self.debug == True):

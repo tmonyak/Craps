@@ -1,8 +1,4 @@
-Start: $300, Iterations: 5000
+Start: $200, Iterations: 20000
 
-    MINIMUM    |    RETURN     |    SUCCESS    |   AVG TURNS   |  AVG POINTS   
+    MINIMUM    |    RETURN     |    SUCCESS    |   AVG ROLLS   |  AVG POINTS   
 -------------------------------------------------------------------------------
-      $10      |     $360      |      69%      |      45       |       9       
-      $10      |     $450      |      58%      |      77       |      15       
-      $10      |     $510      |      50%      |      100      |      19       
-      $10      |     $600      |      44%      |      125      |      24       
